@@ -1,0 +1,210 @@
+<!DOCTYPE HTML>
+<!--
+	Massively by HTML5 UP
+	html5up.net | @ajlkn
+	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
+<html>
+	<head>
+		<title>Anurag Somani</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<link rel="stylesheet" href="assets/css/main.css" />
+		<noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
+		<meta http-equiv="X-UA-Compatible" content="ie=edge">
+		<script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+		
+	</head>
+	<body class="is-preload">
+
+		<script>
+			$(function () {
+				var mediumPromise = new Promise(function (resolve) {
+				var $content = $('#jsonContent');
+				var data = {
+					rss: 'https://medium.com/feed/@mediumstaff'
+				};
+				$.get('https://api.rss2json.com/v1/api.json?rss_url=https%3A%2F%2Fmedium.com%2Ffeed%2F%40anurag-somani2019-17724', data, function (response) {
+					if (response.status == 'ok') {
+						$("#logo").append(`<img src="${response.feed["image"]}" class="rounded mx-auto d-block">`)
+						var output = '';
+						$.each(response.items, function (k, item) {
+							output += `<div class="card mb-3 mx-auto mr-5 " style="width: 20rem;">`;
+							var tagIndex = item.description.indexOf('<img'); // Find where the img tag starts
+							var srcIndex = item.description.substring(tagIndex).indexOf('src=') + tagIndex; // Find where the src attribute starts
+							var srcStart = srcIndex + 5; // Find where the actual image URL starts; 5 for the length of 'src="'
+							var srcEnd = item.description.substring(srcStart).indexOf('"') + srcStart; // Find where the URL ends
+							var src = item.description.substring(srcStart, srcEnd); // Extract just the URL
+							output += `<img src="${src}" class="card-img-top" alt="Cover image">`;
+							output += `<div class="card-body">`;
+							output += `<h5 class="card-title"><a href="${item.link}">${item.title}</a></h5>`;
+							var yourString = item.description.replace(/<img[^>]*>/g,""); //replace with your string.
+							yourString = yourString.replace('h4', 'p');
+							yourString = yourString.replace('h3', 'p');
+							var maxLength = 150; // maximum number of characters to extract
+							//trim the string to the maximum length
+							var trimmedString = yourString.substr(0, maxLength);
+							//re-trim if we are in the middle of a word
+							trimmedString = trimmedString.substr(0, Math.min(trimmedString.length, trimmedString.lastIndexOf(" ")))
+							output += `<p class="card-text">${trimmedString}...</p>`;
+							output += `<a href="${item.link}" class="btn btn-outline-success">Read More</a>`;
+							output += '</div></div>';
+							return k < 10;
+						});
+						resolve($content.html(output));
+					}
+				});
+				});
+			
+			mediumPromise.then(function()
+				{
+					//Pagination
+					pageSize = 3;
+			
+					var pageCount = $(".card").length / pageSize;
+			
+					for (var i = 0; i < pageCount; i++) {
+						$("#pagin").append(`<li class="page-item"><a class="page-link" href="#">${(i + 1)}</a></li> `);
+					}
+					$("#pagin li:nth-child(1)").addClass("active");
+					showPage = function (page) {
+						$(".card").hide();
+						$(".card").each(function (n) {
+							if (n >= pageSize * (page - 1) && n < pageSize * page)
+								$(this).show();
+						});
+					}
+			
+					showPage(1);
+			
+					$("#pagin li").click(function () {
+						$("#pagin li").removeClass("active");
+						$(this).addClass("active");
+						showPage(parseInt($(this).text()))
+					});
+				});
+			});
+					
+		</script>
+		<!-- Wrapper -->
+			<div id="wrapper" class="fade-in">
+
+				<!-- Intro -->
+					<div id="intro">
+						<h1>
+						Anurag Somani
+						</h1>
+						<p><b><font size=5px>Software Developer and ML enthusiast</font></b><br> With a Bachelor's degree in Computer Science </br> And a great interest in DSA and problem solving.<br> I do what i believe instead of what i think.</p>
+						<ul class="actions">
+							<li><a href="#header" class="button icon solid solo fa-arrow-down scrolly">Continue</a></li>
+						</ul>
+					</div>
+
+				<!-- Header -->
+					<header id="header">
+						<a href="index.html" class="logo">...BLah Blah Blah...</a>
+					</header>
+
+				<!-- Nav -->
+					<nav id="nav">
+						<ul class="links">
+							<li class="active"><a href="index.html">About Me</a></li>
+							<li><a href="generic.html">CV</a></li>
+							<li><a href="elements.html">Projects</a></li>
+						</ul>
+						<ul class="icons">
+							<li><a href="https://twitter.com/_AnuragSomani_" class="icon brands fa-twitter"><span class="label">Twitter</span></a></li>
+							<li><a href="https://www.linkedin.com/in/anuragsomani1611/" class="icon brands fa-linkedin-in"><span class="label">LinkedIn</span></a></li>
+							<li><a href="https://medium.com/@anurag-somani2019-17724" class="icon brands fa-medium"><span class="label">Medium</span></a></li>
+							<li><a href="https://github.com/AnuragSomani1611" class="icon brands fa-github"><span class="label">GitHub</span></a></li>
+						</ul>
+					</nav>
+
+				<!-- Main -->
+					<div id="main">
+						<!-- Featured Post -->
+						<div class="image-txt-container">
+							<img src="images/pic2.jpg" width="360" height="480">
+							<article class="post featured">
+								<center>
+								<h2>
+									Hi there 👋
+								</h2>
+								<h3>I am a Developer with a vision to :</h3></center>
+								<br>
+								<ul>
+								<li>💪 solve complex programming questions and intense debugging</li>
+								<li>🌍 build web technologies more advanced</li>
+								<li>🔥 come out with technical solutions for day-to-day real time problems</li>
+								<li>🙇‍♂‍ learn from machines made to learn from us</li>
+								<li>⚡ learn more and develop more</li>
+								<li>☀️ <b>build a reputation and fortune out of everything I learn</b></li>
+								<br>
+								<center><h4>Curriculum vitae</h4>
+								<br>
+								<form action="https://drive.google.com/file/d/1Ps0PAH_XRckjHkGyVqRT_Z2N4p-3UBHH/view?usp=sharing" target="_blank">
+									<input type="submit" value="View CV" />
+								</form>
+								</center>
+								</ul>
+							</article>
+						  </div>
+
+						<center>
+							<h3>✨ My Featured Articles ✨</h3>
+							<center>
+								<li> I love to read articles and have tried to write some of them myselves.</li>
+								<li> Scroll down to read some of the articles that I published with Medium.</li>
+							</center>
+							</center>
+						<!-- Posts -->
+						<div class="container mt-5 pt-5" id="medium">
+							<div class="row" id="jsonContent">
+							</div>
+						</div>
+						<div class="text-center">
+							<div class="mb-5">
+								<a class="btn btn-outline-primary btn-lg mb-5" href="https://medium.com/@anurag-somani2019-17724">View all Posts</a>
+							</div>
+						</div>
+							<!-- <section class="posts">
+								<article>
+									<blockquote class="twitter-tweet"><a href="https://twitter.com/rohithtejam/status/1481990963224629255?ref_src=twsrc%5Etfw"></a></blockquote>
+								</article>
+								<article>
+									<blockquote class="twitter-tweet"><p lang="en" dir="ltr">Knowledge Graph Embedding — A Simplified Version! <a href="https://twitter.com/TDataScience?ref_src=twsrc%5Etfw">@TDataScience</a> <a href="https://twitter.com/hashtag/knowledgegraph?src=hash&amp;ref_src=twsrc%5Etfw">#knowledgegraph</a> <a href="https://twitter.com/hashtag/graphembedding?src=hash&amp;ref_src=twsrc%5Etfw">#graphembedding</a> <a href="https://twitter.com/hashtag/ai?src=hash&amp;ref_src=twsrc%5Etfw">#ai</a> <a href="https://twitter.com/hashtag/ml?src=hash&amp;ref_src=twsrc%5Etfw">#ml</a><br> <a href="https://t.co/fcjThv7JAB">https://t.co/fcjThv7JAB</a></p>&mdash; Rohith Teja (@rohithtejam) <a href="https://twitter.com/rohithtejam/status/1480654812362559496?ref_src=twsrc%5Etfw">January 10, 2022</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+								</article>	
+							</section> -->
+						<!-- Footer -->
+							<footer>
+								<script type="text/javascript" src="https://cdnjs.buymeacoffee.com/1.0.0/button.prod.min.js" data-name="bmc-button" data-slug="anuragsomani" data-color="#FFDD00" data-emoji=""  data-font="Cookie" data-text="Buy me a coffee" data-outline-color="#000000" data-font-color="#000000" data-coffee-color="#ffffff" ></script>
+								<center>
+									<section>
+										<h3></h3>
+										<ul class="icons alt">
+											<li><a href="https://twitter.com/_AnuragSomani_" class="icon brands fa-twitter"><span class="label">Twitter</span></a></li>
+											<li><a href="https://www.linkedin.com/in/anuragsomani1611/" class="icon brands fa-linkedin-in"><span class="label">LinkedIn</span></a></li>
+											<li><a href="https://medium.com/@anurag-somani2019-17724" class="icon brands fa-medium"><span class="label">Medium</span></a></li>
+											<li><a href="https://github.com/AnuragSomani1611" class="icon brands fa-github"><span class="label">GitHub</span></a></li>
+										</ul>
+								</section>
+							</center>
+							</footer>
+					</div>
+				<!-- Copyright -->
+					<div id="copyright">
+						<ul><li> anuragsomani</li><li> <a href="#">Make World a Beautiful and Better Place</a></li></ul>
+					</div>
+			</div>
+		<!-- Scripts -->
+			<script src="assets/js/jquery.min.js"></script>
+			<script src="assets/js/jquery.scrollex.min.js"></script>
+			<script src="assets/js/jquery.scrolly.min.js"></script>
+			<script src="assets/js/browser.min.js"></script>
+			<script src="assets/js/breakpoints.min.js"></script>
+			<script src="assets/js/util.js"></script>
+			<script src="assets/js/main.js"></script>
+	</body>
+</html>
